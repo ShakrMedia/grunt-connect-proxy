@@ -2,6 +2,37 @@
 
 > Provides a http proxy as middleware for the grunt-contrib-connect plugin.
 
+## About this fork
+This fork is created to proxy remote API host with `grunt-contrib-connect`. The difference from original is pretty simple: `options` hash accepts one additional argument `rewriteHost`. You can use it to set proper **Host** header to remote API server.
+
+```js
+grunt.initConfig({
+    connect: {
+        server: {
+            options: {
+                port: 9000,
+                hostname: 'localhost'
+            },
+            proxies: [
+                {
+                    context: '/cortex',
+                    host: '10.10.2.202',
+                    port: 8080,
+                    https: false,
+                    xforward: false,
+                    rewriteHost: "your-remote.api-server.com",
+                    headers: {
+                        "x-custom-added-header": value
+                    },
+                    hideHeaders: ['x-removed-header']
+                }
+            ]
+        }
+    }
+})
+```
+
+
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
 

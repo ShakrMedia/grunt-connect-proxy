@@ -58,6 +58,10 @@ module.exports = function(grunt) {
                     }
                 }).on('error', function (err, req, res) {
                     grunt.log.error('Proxy error: ', err.code);
+                }).on('proxyReq', function(proxyReq, req, res, options) {
+                    if (!_.isUndefined(proxyOption.rewriteHost)) {
+                        proxyReq.setHeader('Host', proxyOption.rewriteHost);
+                    }
                 }),
                 config: proxyOption
             });
